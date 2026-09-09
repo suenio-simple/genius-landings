@@ -4,85 +4,521 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Día de la Madre — SueñoSimple</title>
-    <link rel="stylesheet" href="../css/styles.css" />
+    <style>
+      /* ─── RESET Y BASE ─── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: #ffffff;
+        color: #0f172a;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ─── BARRA DE RETORNO ─── */
+      .back-bar {
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 10px 32px;
+        font-size: 0.82rem;
+        flex-shrink: 0;
+      }
+      .back-bar a {
+        color: #2563eb;
+        text-decoration: none;
+      }
+      .back-bar a:hover {
+        text-decoration: underline;
+      }
+
+      /* ─── HEADER / NAVEGACIÓN ─── */
+      .navbar {
+        background: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 16px 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-shrink: 0;
+      }
+      .navbar .logo {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: #0f172a;
+        text-decoration: none;
+      }
+      .navbar .logo span {
+        color: #2563eb;
+      }
+      .navbar .nav-links {
+        display: flex;
+        gap: 24px;
+        list-style: none;
+      }
+      .navbar .nav-links a {
+        color: #475569;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: color 0.15s;
+      }
+      .navbar .nav-links a:hover {
+        color: #2563eb;
+      }
+
+      /* ─── HERO ─── */
+      .hero {
+        background: #0f172a;
+        color: #fff;
+        text-align: center;
+        padding: 80px 24px;
+      }
+      .hero .badge-tag {
+        display: inline-block;
+        background: #2563eb;
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      .hero h1 {
+        font-size: 2.8rem;
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 16px;
+        letter-spacing: -0.03em;
+      }
+      .hero h1 span {
+        color: #60a5fa;
+      }
+      .hero p {
+        font-size: 1.1rem;
+        color: #94a3b8;
+        max-width: 560px;
+        margin: 0 auto 32px;
+        line-height: 1.65;
+      }
+
+      /* ─── BOTONES ─── */
+      .btn-hero-primary {
+        background: #2563eb;
+        color: #fff;
+        padding: 14px 32px;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: background 0.15s;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-hero-primary:hover {
+        background: #1d4ed8;
+      }
+
+      /* ─── SECCIÓN ─── */
+      .section {
+        padding: 64px 24px;
+        max-width: 960px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .section-title {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #2563eb;
+        margin-bottom: 10px;
+      }
+      .section h2 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 16px;
+        letter-spacing: -0.02em;
+      }
+      .section p {
+        font-size: 1rem;
+        color: #64748b;
+        line-height: 1.7;
+        max-width: 640px;
+        margin-bottom: 16px;
+      }
+
+      /* ─── FEATURES / INFO GRID ─── */
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 20px;
+        margin-top: 32px;
+      }
+      .feature-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 22px;
+      }
+      .feature-card .icon {
+        width: 36px;
+        height: 36px;
+        background: #eff6ff;
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+      }
+      .feature-card h3 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .feature-card p {
+        font-size: 0.85rem;
+        color: #64748b;
+        line-height: 1.55;
+        margin: 0;
+      }
+
+      /* ─── PRODUCTO ─── */
+      .product-section {
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 64px 24px;
+        text-align: center;
+      }
+      .product-section .product-container {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .product-section .product-image {
+        background: #ffffff;
+        border: 2px dashed #cbd5e1;
+        border-radius: 16px;
+        padding: 48px 24px;
+        margin-bottom: 24px;
+        font-size: 3rem;
+        color: #94a3b8;
+        min-height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .product-section h2 {
+        font-size: 1.75rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+      }
+      .product-section .price {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: #2563eb;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        margin: 16px 0;
+      }
+      .product-section .price-note {
+        font-size: 0.875rem;
+        color: #64748b;
+        margin-bottom: 28px;
+      }
+
+      /* ─── FORMULARIO ─── */
+      .form-section {
+        padding: 64px 24px;
+        max-width: 600px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .form-section .section-title {
+        color: #2563eb;
+      }
+      .form-section p {
+        color: #64748b; 
+        margin-bottom: 24px;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        display: block;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+        color: #0f172a;
+      }
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border-color 0.15s;
+        font-family: inherit;
+      }
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      }
+      .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+      .form-group input.error {
+        border-color: #dc2626;
+      }
+      .form-group .error-msg {
+        color: #dc2626;
+        font-size: 0.8rem;
+        margin-top: 4px;
+        display: none;
+      }
+      .form-group .error-msg.show {
+        display: block;
+      }
+      .btn-submit {
+        background: #2563eb;
+        color: #fff;
+        padding: 14px 32px;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.15s;
+        width: 100%;
+      }
+      .btn-submit:hover {
+        background: #1d4ed8;
+      }
+
+      /* ─── FEEDBACK ─── */
+      .feedback {
+        display: none;
+        margin-top: 20px;
+        padding: 16px;
+        border-radius: 6px;
+        background: #ecfdf5;
+        border: 1px solid #6ee7b7;
+        color: #065f46;
+        text-align: center;
+        font-weight: 500;
+      }
+      .feedback.show {
+        display: block;
+      }
+      .feedback.error {
+        background: #fef2f2;
+        border-color: #fca5a5;
+        color: #991b1b;
+      }
+
+      /* ─── FOOTER ─── */
+      .footer {
+        background: #0f172a;
+        color: #64748b;
+        text-align: center;
+        padding: 28px 24px;
+        font-size: 0.82rem;
+        margin-top: auto;
+      }
+
+      /* ─── RESPONSIVE ─── */
+      @media (max-width: 640px) {
+        .navbar {
+          flex-direction: column;
+          gap: 12px;
+          text-align: center;
+        }
+        .hero h1 {
+          font-size: 2rem;
+        }
+        .product-section .price {
+          font-size: 2.8rem;
+        }
+        .section {
+          padding: 40px 16px;
+        }
+        .hero {
+          padding: 48px 16px;
+        }
+        .product-section {
+          padding: 40px 16px;
+        }
+        .form-section {
+          padding: 40px 16px;
+        }
+      }
+    </style>
   </head>
-<body>
-    <!-- Barra de retorno -->
-    <div>
+  <body>
+    <!-- ─── BARRA DE RETORNO ─── -->
+    <div class="back-bar">
       <a href="index.html">← Volver a SueñoSimple</a>
     </div>
 
-    <!-- Header / navegación -->
-    <header>
-      <a href="#">Sueño<span>Simple</span></a>
-      <ul>
-        <li><a href="#contacto">Contacto</a></li>
-        <li><a href="#producto">Comprar</a></li>
-      </ul>
+    <!-- ─── NAVEGACIÓN ─── -->
+    <header class="navbar">
+      <a href="#" class="logo">Sueño<span>Simple</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#info">El producto</a></li>
+          <li><a href="#producto">Comprar</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
     </header>
 
-    <!-- Formulario de lead -->
-    <section id="contacto">
-      <p>Contacto</p>
-      <h2>¿Querés recibir más info?</h2>
+    <!-- ─── HERO ─── -->
+    <section class="hero">
+      <span class="badge-tag">🎁 Día de la Madre</span>
+      <h1>El mejor regalo es el <span>descanso</span></h1>
       <p>
-        Dejanos tus datos y te enviamos todos los detalles para que puedas
-        regalar el descanso que ella merece.
+        Regalá la Economica Pro con descuento especial. Porque ella también
+        merece dormir bien.
+      </p>
+    </section>
+
+    <!-- ─── SECCIÓN INFORMATIVA ─── -->
+    <section class="section" id="info">
+      <p class="section-title">Para ella</p>
+      <h2>Diseñada para su descanso</h2>
+      <p>
+        La Economica Pro es el colchón ideal para regalar en el Día de la Madre.
+        Tecnología de espuma de alta densidad que se adapta al cuerpo y alivia
+        tensiones.
+      </p>
+      <div class="features">
+        <div class="feature-card">
+          <div class="icon">💤</div>
+          <h3>Espuma de alta densidad</h3>
+          <p>
+            18 kg/m³ que distribuyen el peso y eliminan puntos de presión para
+            un sueño profundo.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🧼</div>
+          <h3>Funda lavable</h3>
+          <p>
+            Tejido antibacterial, hipoalergénico y removible. Fácil de mantener
+            siempre limpio.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🔒</div>
+          <h3>Garantía 5 años</h3>
+          <p>
+            Respaldamos nuestra calidad. Si algo falla, lo reemplazamos sin
+            costo adicional.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SECCIÓN DE PRODUCTO ─── -->
+    <section class="product-section" id="producto">
+      <div class="product-container">
+        <h2>Economica Pro</h2>
+        <div class="product-image">
+          
+        </div>
+        <div class="price">$189.990</div>
+        <p class="price-note">6 cuotas sin interés · Envío gratis</p>
+        <a
+          href=""
+          class="btn-hero-primary"
+          >Comprar</a
+        >
+      </div>
+    </section>
+
+    <!-- ─── FORMULARIO DE LEAD ─── -->
+    <section class="form-section" id="contacto">
+      <p class="section-title">Contacto</p>
+      <h2 style="font-size: 1.6rem; margin-bottom: 8px">
+        ¿Querés recibir más info?
+      </h2>
+      <p >
+        Dejanos tus datos y te enviamos todos los detalles.
       </p>
 
       <form id="form-leads">
-        <div id="name">
-          <label>Nombre completo</label>
+        <div class="form-group">
+          <label for="name">Nombre completo *</label>
           <input
-            type="text"
-            id="nombre"
+            type="text" 
+            id="name"
             placeholder="Ej: María Gómez"
-            required
           />
+          <div class="error-msg" id="nameError">
+            Por favor, ingresá tu nombre.
+          </div>
         </div>
-        <div id="mail">
-          <label>Correo electrónico</label>
+
+        <div class="form-group">
+          <label for="mail">Correo electrónico *</label>
           <input
             type="email"
             id="mail"
             placeholder="ejemplo@correo.com"
-            required
           />
+          <div class="error-msg" id="mailError">Ingresá un email válido.</div>
         </div>
-        <div id="phone">
-          <label>Celular</label>
+
+        <div class="form-group">
+          <label for="phone">Celular *</label>
           <input
             type="tel"
             id="phone"
             placeholder="+54 9 11 1234-5678"
-            required
           />
+          <div class="error-msg" id="phoneError">
+            Por favor, ingresá tu número de celular.
+          </div>
         </div>
-        <button type="submit">Enviar</button>
+
+        <!-- ─── TEXTAREA AGREGADO ─── -->
+        <div class="form-group">
+          <label for="message">Mensaje (opcional)</label>
+          <textarea
+            id="message"
+            placeholder="Contanos qué te gustaría saber..."
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          Enviar
+        </button>
       </form>
 
-      <div id="feedback">
-        ✅ ¡Gracias! En breve recibirás toda la información.
+      <div class="feedback" id="feedback">
+
       </div>
     </section>
 
-    <!-- Sección de producto -->
-    <section>
-      <span>Nuevo lanzamiento</span>
-      <h1>Presentamos la <span>Economica Pro</span></h1>
-      <p>
-        El colchón que tu cuerpo necesita, al precio que tu bolsillo agradece.
-        Tecnología de espuma de alta densidad para un descanso real.
-      </p>
-      <div>
-        <a href="#precio">Ver precio</a>
-        <a href="#caracteristicas">Conocer más</a>
-      </div>
-    </section>
-
-    <footer>
+    <!-- ─── FOOTER ─── -->
+    <footer class="footer">
       &copy; 2026 SueñoSimple. Todos los derechos reservados. &mdash;
-      <a href="#">Política de privacidad</a>
+      <span>Política de privacidad</span>
     </footer>
   </body>
 </html>
