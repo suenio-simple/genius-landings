@@ -17,14 +17,17 @@ async function handleSubmit(event, formData) {
     
     validateLead({ name, phone, email });
     await addLead(LANDING_ID, { name, phone, mail });
-
-    feedbackMsg.textContent =
-      "✅ ¡Gracias! En breve recibirás toda la información.";
+    
+    addFeedbackMessage("✅ ¡Gracias! En breve recibirás toda la información.");
+    form.reset();
 
   } catch (error) {
-    feedbackMsg.textContent = error.message
-      ? `❌ ${error.message}`
-      : "❌ Ocurrió un error almacenando tu información, intenta nuevamente en unos segundos.";
+    addFeedbackMessage(
+      error.message
+        ? `❌ ${error.message}`
+        : "❌ Ocurrió un error almacenando tu información, intenta nuevamente en unos segundos.",
+      "error"
+    );
   }
 }
 
@@ -48,4 +51,24 @@ function validateLead({ name, phone, email }) {
   if (!/^\d+$/.test(phone)) {
     throw new Error("El teléfono debe contener solo números.");
   }
+}
+
+/**
+ * Agrega un mensaje de feedback temporal al formulario de captación de leads
+ * 
+ * @param {string} message            - Mensaje a mostrar
+ * @param {"success" | "error"} type  - Tipo de mensaje, "success" para mensajes de éxito y "error" para errores
+ * @param {number} time               - Tiempo a mostrar el mensaje en milisegundos, por defecto 3000ms
+ */
+function addFeedbackMessage(message, type = "success", time = 3000) {
+  feedbackMsg.textContent = message;
+  feedbackMsg.classList.add("show");
+
+  if (type === "error")
+    feedbackMsg.classList.add("error");
+
+  setTimeout(() => {
+    feedbackMsg.textContent = "";
+    feedbackMsg.className = "feedback";
+  }, time);
 }
