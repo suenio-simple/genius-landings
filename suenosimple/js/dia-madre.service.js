@@ -1,7 +1,7 @@
 const API_BASE_URL = 'http://localhost:3000/api/landings'
 
-export async function addLead(id, { name, phone, email }) {
-  const payload = { name, phone, email };
+export async function addLead(id, { name, phone, email, message }) {
+  const payload = { name, phone, email, message };
   const leadData = await fetch(`${API_BASE_URL}/${id}/leads`, {
     method: "POST",
     headers: {
