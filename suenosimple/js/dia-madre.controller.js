@@ -1,7 +1,13 @@
+import { addLead } from "./dia-madre.service.js";
+
+// Todo: almacenar en CRM para obtener el ID 
+const LANDING_ID = 5;
+
+const feedbackMsg = document.getElementById("feedback");
 const form = document.getElementById("form-leads");
 form.addEventListener('submit', (e) => handleSubmit(e, new FormData(form)));
 
-function handleSubmit(event, formData) {
+async function handleSubmit(event, formData) {
   event.preventDefault();
 
   try {
@@ -10,9 +16,15 @@ function handleSubmit(event, formData) {
     const email = (formData.get("mail") ?? "").trim();
     
     validateLead({ name, phone, email });
+    await addLead(LANDING_ID, { name, phone, mail });
+
+    feedbackMsg.textContent =
+      "✅ ¡Gracias! En breve recibirás toda la información.";
 
   } catch (error) {
-    console.error(error);
+    feedbackMsg.textContent = error.message
+      ? `❌ ${error.message}`
+      : "❌ Ocurrió un error almacenando tu información, intenta nuevamente en unos segundos.";
   }
 }
 
