@@ -17,7 +17,7 @@ async function handleSubmit(event, formData) {
     const message = (formData.get("message") ?? "").trim();
 
     validateLead({ name, phone, email });
-    await addLead(LANDING_ID, { name, phone, mail, message });
+    await addLead(LANDING_ID, { name, phone, email, message });
 
     addFeedbackMessage("✅ ¡Gracias! En breve recibirás toda la información.");
     form.reset();
