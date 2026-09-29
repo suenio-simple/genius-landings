@@ -1,7 +1,22 @@
 import { addLead } from "./dia-madre.service.js";
 
 // Todo: almacenar en CRM para obtener el ID 
-const LANDING_ID = 5;
+let LANDING_ID = null;
+
+async function resolveLandingId() {
+  const res = await fetch('http://localhost:3000/api/landings');
+  if (!res.ok) throw new Error('No se pudo resolver la landing');
+  const landings = await res.json();
+  const landing = landings.find(l =>
+    l.name === 'Día de la Madre' && l.client === 'SuenoSimple'
+  );
+  if (!landing) throw new Error('Landing "Día de la Madre" no encontrada');
+  return landing.id;
+}
+
+resolveLandingId()
+  .then(id => { LANDING_ID = id; })
+  .catch(err => addFeedbackMessage(`❌ ${err.message}`, "error"));
 
 const feedbackMsg = document.getElementById("feedback");
 const form = document.getElementById("form-leads");
@@ -9,6 +24,11 @@ form.addEventListener('submit', (e) => handleSubmit(e, new FormData(form)));
 
 async function handleSubmit(event, formData) {
   event.preventDefault();
+
+  if (!LANDING_ID) {
+    addFeedbackMessage("❌ La landing todavía no cargó, esperá un segundo e intentá de nuevo.", "error");
+    return;
+  }
 
   try {
     const name = (formData.get("name") ?? "").trim();
