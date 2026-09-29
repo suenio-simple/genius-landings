@@ -4,7 +4,7 @@ require_once 'api.php';
 // Clientes registrados en el panel (fuente de verdad local)
 // TODO GL-F07: reemplazar este array por un CRUD real (formulario de alta/baja de clientes)
 $clientes = [
-    ['id' => 1, 'nombre' => 'SueñoSimple', 'carpeta' => 'suenosimple'],
+    ['id' => 1, 'nombre' => 'SuenoSimple', 'carpeta' => 'suenosimple'],
     ['id' => 2, 'nombre' => 'TechStore',   'carpeta' => 'techstore'],
     ['id' => 3, 'nombre' => 'ModalAtam',   'carpeta' => 'modalatam'],
 ];
@@ -72,7 +72,7 @@ function count_campaigns_for(array $campaigns, string $client): int {
             <?= $total_landings ?> landing<?= $total_landings !== 1 ? 's' : '' ?> ·
             <?= $total_campaigns ?> campaña<?= $total_campaigns !== 1 ? 's' : '' ?>
           </div>
-          <a href="landings.php?cliente=<?= urlencode($c['nombre']) ?>" class="btn btn-primary">Gestionar landings</a>
+          <a href="admin/landings.php?cliente=<?= urlencode($c['nombre']) ?>" class="btn btn-primary">Gestionar landings</a>
           <a href="../<?= $c['carpeta'] ?>/index.html" class="btn btn-secondary">Ver panel</a>
         </div>
       <?php endforeach; ?>
