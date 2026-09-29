@@ -29,3 +29,31 @@ function get_landings(?string $client = null): array {
 function get_leads(int $landing_id): array {
     return api_get(LANDING_CRM_URL . '/api/landings/' . $landing_id . '/leads');
 }
+
+function post_landing(array $payload): array {
+    $url = LANDING_CRM_URL . '/api/landings';
+
+    $ch = curl_init($url);
+    curl_setopt_array($ch, [
+        CURLOPT_POST           => true,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+        CURLOPT_POSTFIELDS     => json_encode($payload, JSON_UNESCAPED_UNICODE),
+        CURLOPT_TIMEOUT        => 10,
+    ]);
+
+    $body = curl_exec($ch);
+    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $err  = curl_error($ch);
+    curl_close($ch);
+    if ($code === 201) {
+        return ['ok' => true, 'data' => json_decode($body, true)];
+    }
+    if ($code === 404) {
+        return ['ok' => false, 'error' => 'Template no encontrado en el CRM.'];
+    }
+
+    $data = json_decode($body, true);
+    $detalle = $data['message'] ?? $data['error'] ?? $body;
+    return ['ok' => false, 'error' => "HTTP $code — $detalle"];
+}
