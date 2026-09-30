@@ -29,8 +29,14 @@ genius-landings/
 │   ├── clientes.php                  Gestión de clientes (GL-F07, persistencia pendiente)
 │   └── landings.php                  Registro y listado de landings por cliente (GL-F08)
 ├── suenosimple/
+│   ├── js/
+│   │   ├── dia-madre.controller.js   Validación de los datos ingresados en el form de captación de leads
+│   │   └── dia-madre.service.js      Integración del día de la madre con API CRM
 │   ├── index.html                    Landings de SueñoSimple
-│   └── economica-pro.html            Landing: Economica Pro
+│   ├── economica-pro.html            Landing: Economica Pro
+│   ├── landing-primavera.html        Landing: Día de la primavera
+│   ├── dia-madre.html                Landing: Día de la madre
+│   └── pago.html                     Landing: Página para el seguimiento del botón "comprar" de dia-madre.html
 ├── techstore/
 │   ├── index.html                    Landings de TechStore
 │   ├── black-friday.html             Landing: Black Friday 2026
